@@ -22,5 +22,5 @@ $ node bot.js
 | ------ | ------ |
 | /start | Start Chat Bot |
 | /product | Get Product List |
-| /checkcart | Check Cart Order |
+| /keranjang | Check Cart Order |
 
