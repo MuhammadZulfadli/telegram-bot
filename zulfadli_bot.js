@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const TelegramBot = require("node-telegram-bot-api");
-const token = "1179569994:AAHXKYvaZ0yJpwAIxjZqeQB7LHYIKn7-h0U";
+const token = process.env.TOKEN;
 const axios = require("axios");
 const API = process.env.URL
 const Product = process.env.PRODUK
@@ -94,7 +94,7 @@ const opts1 = {
 						quantity: 1
 					});
 					text = `Product berhasil ditambahkan ke keranjang, 
-Silahkan cek total belanja anda ${Checkcart}`;
+Silahkan cek keranjang belanja anda ${Checkcart}`;
 					bot.editMessageText(text, opts2);
 				}
 				else {
@@ -102,7 +102,7 @@ Silahkan cek total belanja anda ${Checkcart}`;
 					if (i != -1) {
 						keranjang[i].quantity += 1;
                         text = `Product berhasil ditambahkan ke keranjang, 
-Silahkan cek total belanja anda ${Checkcart}`;
+Silahkan cek keranjang belanja anda ${Checkcart}`;
 						bot.editMessageText(text, opts2);
 					}
 					else {
@@ -112,7 +112,7 @@ Silahkan cek total belanja anda ${Checkcart}`;
 							quantity: 1
 						});
                         text = `Product berhasil ditambahkan ke keranjang, 
-Silahkan cek total belanja anda ${Checkcart}`;
+Silahkan cek keranjang belanja anda ${Checkcart}`;
 						bot.editMessageText(text, opts2);
 						
 					}
