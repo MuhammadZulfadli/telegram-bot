@@ -73,7 +73,7 @@ exports.deleteCustomer = async (req, res) => {
 			});
 		} else {
 			res.status(400).json({
-				message: 'Invalid customer id',
+				message: 'Invalid customer ',
 				status: false
 			});
 		}
