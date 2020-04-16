@@ -1,8 +1,10 @@
+require('dotenv').config();
+
 const TelegramBot = require("node-telegram-bot-api");
 const token = "1179569994:AAHXKYvaZ0yJpwAIxjZqeQB7LHYIKn7-h0U";
 const axios = require("axios");
-const API = 'http://localhost:5000/';
-const Product = 'api/v1/product/';
+const API = process.env.URL
+const Product = process.env.PRODUK
 const bot = new TelegramBot(token, {polling:true})
 
 let keranjang = [];
@@ -11,11 +13,11 @@ let total = 0;
 const welcomebot = `Selamat Datang !
 Mau Cari Barang Apa?`
 const Listbarang = '/product'
-const Checkcart = '/cart'
+const Checkcart = '/keranjang'
 
     bot.onText(/\/start|\halo|\hi|\hy|\hai/, (msg) => {
     bot.sendMessage(msg.chat.id, `Halo ${msg.chat.last_name} ${welcomebot}`);
-    bot.sendMessage(msg.chat.id, `Silahkan Lihat List Produk ${Listbarang}`, )
+    bot.sendMessage(msg.chat.id, `Silahkan Lihat List Produk ${Listbarang}`)
   });
 
   // Request List Produk
@@ -122,13 +124,13 @@ Silahkan cek total belanja anda ${Checkcart}`;
 });
 
 // Check Cart
-bot.onText(/\/cart/, msg => {
+bot.onText(/\/keranjang/, msg => {
     let data = JSON.stringify(keranjang)
     for (let i = 0; i < keranjang.length; i++) {
         total+= keranjang[i].quantity * keranjang[i].price
     }
     bot.sendMessage(msg.chat.id, `Berikut Ini List Belanjaan kamu :  
-*${data} * 
+*${data}* 
 Total Belanja Kamu Sebesar Rp. *${total}*`, { parse_mode: "Markdown" }
     )
 })
