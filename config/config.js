@@ -36,7 +36,8 @@ module.exports = {
       underscoredAll: 1,
       createdAt: "created_at",
       updatedAt: "updated_at",
-  },},
+  },
+},
   test: {
     username: process.env.DATABASE_USER,
     password: process.env.DATABASE_PASSWORD,
