@@ -3,12 +3,10 @@ const router = express.Router()
 
 const OrderController = require('../controllers/Orders')
 
-router.route('/')
-    .get(OrderController.getAllOrder)
-    .post(OrderController.addOrder)
-router.route('/:id')
-    .get(OrderController.getOrderById)
-    .put(OrderController.updateOrder)
-    .delete(OrderController.deleteOrder)
+router.get('/', OrderController.getAllOrder)
+router.post('/', OrderController.addOrder)
+router.get('/:id', OrderController.getOrderById)
+router.put('/:id', OrderController.updateOrder)
+router.delete('/:id', OrderController.deleteOrder)
     
 module.exports = router

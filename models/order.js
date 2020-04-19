@@ -2,7 +2,10 @@
 module.exports = (sequelize, DataTypes) => {
   const order = sequelize.define('order', {
     user_id: DataTypes.INTEGER,
-    status: DataTypes.BOOLEAN,
+    status:{
+      type: DataTypes.ENUM,
+      values: ['accepted', 'sending', 'done', 'failure']
+    },
     driver_id: DataTypes.INTEGER
   }, {});
   order.associate = function(models) {

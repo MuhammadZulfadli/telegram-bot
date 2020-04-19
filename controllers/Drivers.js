@@ -45,7 +45,7 @@ exports.updateDriver = async (req, res) => {
 		if (cekDriver) {
 			await driver.update(dataDriver, { where: { id: driverId } });
 			res.status(201).json({
-				message: 'success edit driver',
+				message: 'success edit driver data',
 				status: true
 			});
 		} else {
