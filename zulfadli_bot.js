@@ -10,15 +10,32 @@ const bot = new TelegramBot(token, {polling:true})
 let keranjang = [];
 let total = 0;
 
-const welcomebot = `Selamat Datang !
-Mau Cari Barang Apa?`
-const Listbarang = '/product'
+const welcomebot = `Selamat Datang !\nUntuk memudahkan kamu dalam berbelanja, \nSilahkan daftar terlebih dahulu ya`
+const Deksripsi = '/description'
 const Checkcart = '/keranjang'
+const Bantuan = '/help'
+const Listbarang = '/product'
+const Profil = '/me'
+const Daftar = '/register'
 
     bot.onText(/\/start|\halo|\hi|\hy|\hai/, (msg) => {
-    bot.sendMessage(msg.chat.id, `Halo ${msg.chat.last_name} ${welcomebot}`);
-    bot.sendMessage(msg.chat.id, `Silahkan Lihat List Produk ${Listbarang}`)
+        bot.sendMessage(msg.chat.id, `Halo ${msg.chat.last_name} ${welcomebot}\n Silahkan ikuti format berikut :\n${Daftar} Zulfadli - zulfadli48 - ipay48@gmail.com - 085760860595`)
+        bot.sendMessage(msg.chat.id, `Tentang Toko Ini ${Deksripsi}`)
+        bot.sendMessage(msg.chat.id, `Temukan yang kamu butuhkan disini ${Bantuan}`)
   });
+
+//deskripsi produk
+bot.onText(/\/description/, msg => {
+    bot.sendMessage(msg.chat.id, `Ipay'store`)
+})
+
+bot.onText(/\/help/, msg => {
+    bot.sendMessage(msg.chat.id, `*Selamat Datang di Pusat Bantuan Toko Kami, Silahkan temukan yang kamu butuhkan disini*
+                                    =======================================================`)
+    bot.sendMessage(msg.chat.id, `Untuk Melihat detail profil ${Profil}`)
+    bot.sendMessage(msg.chat.id, `Untuk Order, silahkan ke sini ${Listbarang}`)
+
+})
 
   // Request List Produk
     bot.onText(/\/product/, msg => {
@@ -133,4 +150,43 @@ bot.onText(/\/keranjang/, msg => {
 *${data}* 
 Total Belanja Kamu Sebesar Rp. *${total}*`, { parse_mode: "Markdown" }
     )
+})
+
+//daftar akun
+bot.onText(/\/register (.+)/, async (msg, data)=> {
+    const [full_name,username,email,phone_number] = data[1].split('-')
+
+    try{
+        const response = await axios.post (API + CUSTOMER, {
+            "data" :{
+                "attributes": {
+                    "id": msg.from.id,
+                    "full_name": full_name,
+                    "username": username,
+                    "email": email,
+                    "phone_number": phone_number
+                }
+            }
+        })
+        bot.sendMessage(msg.chat.id, `Yeay pendaftaran kamu berhasil, silahkan lihat detail profil kamu /me\n atau ingin melakukan order silahkan lihat list produk ${Listbarang}`)
+    } catch (error){
+        console.log(error)
+        bot.sendMessage(msg.chat.id, 'Kamu telah terdaftar')
+    }
+})
+
+
+bot.onText(/\/me/, async (msg)=>{
+    const id = msg.from.id
+    try {
+        const response = await axios.get(API + CUSTOMER + id )
+        bot.sendMessage(msg.chat.id, `Berikut detail profil kamu : \nNama : ${response.data.data.full_name} \nUsername: ${response.data.data.username}\nEmail: ${response.data.data.email}\nPhone number: ${response.data.data.phone_number}.`, {
+            parse_mode:'Markdown'
+        })
+    } catch (error) {
+        console.log(error);
+        bot.sendMessage(msg.chat.id, `Maaf, kamu belum terdaftar disistem kami.\nSilahkan mendaftar dengan mengirimkan data dengan format berikut : \n/daftar *nama*-*username*-*email*-*phone number*\nContoh : /daftar *Zulfadli*-*zulfadli*-* ipay48@gmail.com*-*085760860595*`,{
+            parse_mode:"Markdown"
+        })
+    }
 })
