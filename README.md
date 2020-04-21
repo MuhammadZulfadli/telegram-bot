@@ -1,6 +1,6 @@
 # Online Order Bot Telegram
 
-#### Bot Still running on local server with mysql
+#### Bot was running on online database server with mysql
 
 ## How To API
 
@@ -16,11 +16,5 @@ Terminal 2
 $ node bot.js
 ```
 
-### Bot Commands
 
-| Command | Function |
-| ------ | ------ |
-| /start | Start Chat Bot |
-| /product | Get Product List |
-| /keranjang | Check Cart Order |
 
